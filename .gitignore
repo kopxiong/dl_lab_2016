@@ -1,4 +1,5 @@
-*.pyc
+*.pdf
+01_notebooks/data/*
 02_rgb_d/*.pyc
 03_visual_planner/*.pyc
 03_visual_planner/*.csv
