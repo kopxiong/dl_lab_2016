@@ -1,0 +1,191 @@
+Try 1:
+
+MomentumOptimizer, zeros bias initialization, decay learning_rate
+
+RGBD:
+Minibatch loss: 0.082, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 13.8%
+Test error: 6.5%
+Confusion matrix:
+[[570   0   0  15   0  37   0   0   0   7]
+ [  0 328   0  75 111   0   0   0  68   0]
+ [  0   0 537   0   0   0   0  11  47   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 532   0   0   0  34   0]
+ [  1   0   0   0   0 615   0   0   0   2]
+ [  0   0   0   0   0   0 699   0   0   0]
+ [  0   0   1   0   0   0   0 584   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+RGB: learning_rate=0.01
+Minibatch loss: 0.081, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 13.0%
+Test error: 14.5%
+Confusion matrix:
+[[629   0   0   0   0   0   0   0   0   0]
+ [  0   3   0 579   0   0   0   0   0   0]
+ [  0   0 595   0   0   0   0   0   0   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   5   0 257   0   0   0 304   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0  28   0   0   0   0 671   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+ 
+Try 2:
+MomentumOptimizer, constant(0.1) bias initialization, decay learning_rate
+ 
+Minibatch loss: 0.081, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 13.7%
+Test error: 17.4%
+Confusion matrix:
+[[481   0   2   9  36 101   0   0   0   0]
+ [  0 108   0 324   0   0  81   0  69   0]
+ [  5   0 491  41  12   0   0  22  24   0]
+ [  0   0   8 774   0   0   0   1   3   0]
+ [  0   0   6   0 463   0   0   0  97   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0  75   0 131   4   0 489   0   0   0]
+ [  0   0  33   1   0   0   0 551   0   0]
+ [  0   0   0   0  18   0   0   0 543   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+ 
+
+Try 3:
+AdamOptimizer, zeros bias initialization, decay learning_rate, epsilon=0.1
+
+RBGD:
+run1:
+Minibatch loss: 0.080, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 13.4%
+Test error: 8.7%
+Confusion matrix:
+[[629   0   0   0   0   0   0   0   0   0]
+ [  0 142   0 364   2   0  74   0   0   0]
+ [  0   0 560   0   0   0   0   0  35   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 494   0   0   0  72   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0   0   0   0   0   0 699   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+ 
+run2:
+Minibatch loss: 0.080, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 9.0%
+Test error: 4.3%
+Confusion matrix:
+[[629   0   0   0   0   0   0   0   0   0]
+ [  0 408  11 144   9   0  10   0   0   0]
+ [  0   0 553   4   0   0   0   0  38   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 511   0   0   0  55   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0   0   0   0   0   0 699   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+RGB: learning_rate=0.01
+Minibatch loss: 0.081, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 6.7%
+Test error: 9.7%
+Confusion matrix:
+[[629   0   0   0   0   0   0   0   0   0]
+ [  0 371   0 211   0   0   0   0   0   0]
+ [  0   0 556  22   3   0   0   0  14   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 374   0   0   0 192   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0 172   0   0   0   0 527   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+ 
+
+Try 4:
+AdamOptimizer, zeros bias initialization, decay learning_rate, epsilon=1.0
+
+RGBD:
+Minibatch loss: 0.086, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 16.0%
+Test error: 7.2%
+Confusion matrix:
+[[610   0   0   0   0  19   0   0   0   0]
+ [  0 313   1 136  39   0  93   0   0   0]
+ [  0   0 550   0   0   0   0   0  45   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 441   0   0   0 125   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0   0   0   0   0   0 699   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+RGB:
+Minibatch loss: 0.088, learning rate: 0.002259
+Minibatch error: 0.0%
+Validation error: 10.3%
+Test error: 11.9%
+Confusion matrix:
+[[629   0   0   0   0   0   0   0   0   0]
+ [  0 395   0 187   0   0   0   0   0   0]
+ [  0   0 559   0   0   0   0   0  36   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 271   0   0   0 295   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0 237   0   0   0   0 462   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+
+Architecture 2: 
+RGBD:
+Step 6500 (epoch 14.86), 1133.0 ms
+Minibatch loss: 0.684, learning rate: 0.004877
+Minibatch error: 0.0%
+Validation error: 9.7%
+Test error: 9.9%
+Confusion matrix:
+[[310   0   0   0   0   4   0   0   0 315]
+ [  0 458   0 124   0   0   0   0   0   0]
+ [  0   0 523  17   1   0   0   0  54   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 466   0   0   0 100   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0   0   0   0   0   0 699   0   0   0]
+ [  0   0  11   0   0   0   0 574   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+RGB:
+Step 6500 (epoch 14.86), 946.3 ms
+Minibatch loss: 0.684, learning rate: 0.004877
+Minibatch error: 0.0%
+Validation error: 5.3%
+Test error: 9.7%
+Confusion matrix:
+[[629   0   0   0   0   0   0   0   0   0]
+ [  0 395   0 187   0   0   0   0   0   0]
+ [  0   0 434  74   9   0   0  22  56   0]
+ [  0   0   0 786   0   0   0   0   0   0]
+ [  0   0   0   0 300   0   0   0 266   0]
+ [  0   0   0   0   0 618   0   0   0   0]
+ [  0   0   0   0   0   0 699   0   0   0]
+ [  0   0   0   0   0   0   0 585   0   0]
+ [  0   0   0   0   0   0   0   0 561   0]
+ [  0   0   0   0   0   0   0   0   0 700]]
+
+

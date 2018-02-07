@@ -1,0 +1,8 @@
+02_rgb_d/*.pyc
+03_visual_planner/*.pyc
+03_visual_planner/*.csv
+04_visual_rl/*.pyc
+05_final_project/*.pyc
+05_final_project/DDQN_lr_0.00001/*
+05_final_project/DDQN_lr_0.0001/*
+05_final_project/DQN_lr_0.00001/*
