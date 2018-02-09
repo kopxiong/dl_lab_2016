@@ -1,5 +1,6 @@
-*.pdf
+reports/*
 01_notebooks/data/*
+01_notebooks/.ipynb_checkpoints/*
 02_rgb_d/*.pyc
 03_visual_planner/*.pyc
 03_visual_planner/*.csv
