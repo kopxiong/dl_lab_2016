@@ -13,7 +13,9 @@
 # limitations under the License.
 # ==============================================================================
 
-"""Simple, end-to-end, LeNet-5-like convolutional rgbd_10 model example."""
+"""
+Simple, end-to-end, LeNet-5-like convolutional rgbd_10 model example.
+"""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -37,15 +39,15 @@ from sklearn.metrics import confusion_matrix
 # TODO
 # These are some useful constants that you can use in your code.
 # Feel free to ignore them or change them.
-# TODO 
-IMAGE_SIZE = 32
-NUM_LABELS = 10
-SEED = 66478    # Set to None for random seed.
-BATCH_SIZE = 64
-NUM_EPOCHS = 15 
+# TODO
+IMAGE_SIZE      = 32
+NUM_LABELS      = 10
+SEED            = 66478    # Set to None for random seed.
+BATCH_SIZE      = 64
+NUM_EPOCHS      = 5
 EVAL_BATCH_SIZE = 1024
-EVAL_FREQUENCY = 100    # Number of steps between evaluations.
-LAMBDA = 5e-4    # Regularization parameter
+EVAL_FREQUENCY  = 100      # Number of steps between evaluations.
+LAMBDA          = 5e-4     # Regularization parameter
 
 # This is where the data gets stored
 TRAIN_DIR = 'data'
@@ -74,7 +76,7 @@ def fake_data(num_images, channels):
         label = image % 2
         data[image, :, :, 0] = label - 0.5
         labels[image] = label
-    
+
     return data, labels
 
 def main(argv=None):  # pylint: disable=unused-argument
@@ -88,26 +90,26 @@ def main(argv=None):  # pylint: disable=unused-argument
     else:
         if (FLAGS.use_rgbd):
             NUM_CHANNELS = 4
-            print('****** RGBD_10 dataset ******') 
+            print('****** RGBD_10 dataset ******')
             print('* Input: RGB-D              *')
-            print('* Channels: 4               *') 
+            print('* Channels: 4               *')
             print('*****************************')
         else:
             NUM_CHANNELS = 3
-            print('****** RGB_10 dataset ******') 
+            print('****** RGB_10 dataset ******')
             print('* Input: RGB                *')
-            print('* Channels: 3               *') 
+            print('* Channels: 3               *')
             print('*****************************')
-      
+
         # Load input data
-        data_sets = input_data.read_data_sets(TRAIN_DIR, FLAGS.use_rgbd)
+        data_sets  = input_data.read_data_sets(TRAIN_DIR, FLAGS.use_rgbd)
         num_epochs = NUM_EPOCHS
 
-        train_data = data_sets.train.images
-        train_labels= data_sets.train.labels
-        test_data = data_sets.test.images
-        test_labels = data_sets.test.labels 
-        validation_data = data_sets.validation.images
+        train_data        = data_sets.train.images
+        train_labels      = data_sets.train.labels
+        test_data         = data_sets.test.images
+        test_labels       = data_sets.test.labels
+        validation_data   = data_sets.validation.images
         validation_labels = data_sets.validation.labels
 
     train_size = train_labels.shape[0]
@@ -142,8 +144,8 @@ def main(argv=None):  # pylint: disable=unused-argument
     # TODO
     # define weights and biases initialization functions
     def weight_variable(shape):
-        initial = tf.truncated_normal(shape, 
-                                    stddev=0.1, 
+        initial = tf.truncated_normal(shape,
+                                    stddev=0.1,
                                     dtype=data_type(),
                                     seed=SEED)
         return tf.Variable(initial)
@@ -166,15 +168,15 @@ def main(argv=None):  # pylint: disable=unused-argument
     b_conv1 = bias_variable([32])
 
     # conv2: 5*5 filter with depth 64
-    W_conv2 = weight_variable([5, 5, 32, 64])   
+    W_conv2 = weight_variable([5, 5, 32, 64])
     b_conv2 = bias_variable([64])
-    
+
     # conv3: 5*5 filter with depth 128
-    W_conv3 = weight_variable([3, 3, 64, 128])   
+    W_conv3 = weight_variable([3, 3, 64, 128])
     b_conv3 = bias_variable([128])
-    
+
     # conv4: 5*5 filter with depth 256
-    W_conv4 = weight_variable([3, 3, 128, 256])   
+    W_conv4 = weight_variable([3, 3, 128, 256])
     b_conv4 = bias_variable([256])
 
     # fc1: 8*8*64 num_units with depth 512
@@ -184,7 +186,7 @@ def main(argv=None):  # pylint: disable=unused-argument
     # fc2: 512 num_units with depth: NUM_LABELS
     W_fc2 = weight_variable([512, NUM_LABELS])
     b_fc2 = bias_variable([NUM_LABELS])
-        
+
     # define your model here
     def model(data, train=False):
 
@@ -193,31 +195,29 @@ def main(argv=None):  # pylint: disable=unused-argument
 
         h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
         h_pool2 = max_pool_2x2(h_conv2)
-        
+
         h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3) + b_conv3)
         h_pool3 = max_pool_2x2(h_conv3)
 
         h_conv4 = tf.nn.relu(conv2d(h_pool3, W_conv4) + b_conv4)
         h_pool4 = max_pool_2x2(h_conv4)
-        
+
         h_pool2_flat = tf.reshape(h_pool4, [-1, 2*2*256])
         h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
-        
+
         # add a 50% dropout during training only
         if train:
             h_fc1 = tf.nn.dropout(h_fc1, 0.5, seed=SEED)
-        
+
         h_fc2 = tf.matmul(h_fc1, W_fc2) + b_fc2
-        
+
         return h_fc2
 
     # TODO
     # compute the loss of the model here
     logits = model(train_data_node, True)
-    loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits
-                          (logits, train_labels_node, name='xentropy'), 
-                          name='xentropy_mean')
-    
+    loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=train_labels_node, logits=logits, name='xentropy'), name='xentropy_mean')
+
     # add L2 regularizer for the fully connected parameters
     l2_reg = tf.nn.l2_loss(W_fc1) + tf.nn.l2_loss(b_fc1) + tf.nn.l2_loss(W_fc2) + tf.nn.l2_loss(b_fc2)
     loss += LAMBDA * l2_reg
@@ -226,21 +226,21 @@ def main(argv=None):  # pylint: disable=unused-argument
     # then create an optimizer to train the model
     # HINT: you can use the various optimizers implemented in TensorFlow.
     #       For example, google for: tf.train.AdamOptimizer()
-    
+
     #tf.scalar_summary(loss.op.name, loss)
-    
+
     global_step = tf.Variable(0, dtype=data_type())
-    learning_rate = tf.train.exponential_decay(0.01, 
-                                               global_step * BATCH_SIZE, 
+    learning_rate = tf.train.exponential_decay(0.01,
+                                               global_step * BATCH_SIZE,
                                                train_size,
-                                               0.95, 
+                                               0.95,
                                                staircase=True)
     # Use momentum for the optimization
     #optimizer = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss, global_step=global_step)
-    
+
     # Use AdamOptimizer for the optimization
     optimizer = tf.train.AdamOptimizer(learning_rate, beta1=0.9, beta2=0.999, epsilon=0.1).minimize(loss, global_step=global_step)
-    
+
     # Predictions for the current training minibatch.
     train_prediction = tf.nn.softmax(logits)
 
@@ -255,14 +255,14 @@ def main(argv=None):  # pylint: disable=unused-argument
         if size < EVAL_BATCH_SIZE:
             raise ValueError("batch size for evals larger than dataset: %d" % size)
         predictions = numpy.ndarray(shape=(size, NUM_LABELS), dtype=numpy.float32)
-        
+
         for begin in xrange(0, size, EVAL_BATCH_SIZE):
             end = begin + EVAL_BATCH_SIZE
             if end <= size:
-                predictions[begin:end, :] = sess.run(eval_prediction, 
+                predictions[begin:end, :] = sess.run(eval_prediction,
                                                      feed_dict={eval_data: data[begin:end, ...]})
             else:
-                batch_predictions = sess.run(eval_prediction, 
+                batch_predictions = sess.run(eval_prediction,
                                              feed_dict={eval_data: data[-EVAL_BATCH_SIZE:, ...]})
                 predictions[begin:, :] = batch_predictions[begin-size:, :]
         return predictions
@@ -285,23 +285,23 @@ def main(argv=None):  # pylint: disable=unused-argument
         # For example like so:
         #print('Minibatch loss: {}'.format(loss))
         #print('Validation error: {}'.format(validation_error_you_computed)
-        
+
         for step in xrange(int(num_epochs * train_size) // BATCH_SIZE):
             offset = (step * BATCH_SIZE) % (train_size - BATCH_SIZE)
             batch_data = train_data[offset: (offset + BATCH_SIZE), ...]
             batch_labels = train_labels[offset: (offset + BATCH_SIZE)]
-            
+
             feed_dict = {train_data_node: batch_data, train_labels_node: batch_labels}
-            
+
             # Run the optimizer to update parameters
             sess.run(optimizer, feed_dict=feed_dict)
-            
+
             if step % EVAL_FREQUENCY == 0:
-                l, lr, predictions = sess.run([loss, learning_rate, train_prediction], 
+                l, lr, predictions = sess.run([loss, learning_rate, train_prediction],
                                               feed_dict=feed_dict)
                 elapsed_time = time.time() - start_time
                 start_time = time.time()
-                
+
                 print('Step %d (epoch %.2f), %.1f ms' %
                       (step, float(step) * BATCH_SIZE / train_size,
                        1000 * elapsed_time / EVAL_FREQUENCY))
@@ -309,7 +309,7 @@ def main(argv=None):  # pylint: disable=unused-argument
                 print('Minibatch error: %.1f%%' % error_rate(predictions, batch_labels))
                 print('Validation error: %.1f%%' % error_rate(
                     eval_in_batches(validation_data, sess), validation_labels))
-        
+
                 # Flush the internal I/O buffer
                 sys.stdout.flush()
 
@@ -319,18 +319,18 @@ def main(argv=None):  # pylint: disable=unused-argument
         # overfitting. Only calculate the test error in the very end for your best model!
         # if test_this_model_after_training:
         #     print('Test error: {}'.format(test_error))
-        #     print('Confusion matrix:') 
+        #     print('Confusion matrix:')
         #     # NOTE: the following will require scikit-learn
         #     print(confusion_matrix(test_labels, numpy.argmax(eval_in_batches(test_data, sess), 1)))
         test_error = error_rate(eval_in_batches(test_data, sess), test_labels)
         print('Test error: %.1f%%' % test_error)
-        
+
         if FLAGS.self_test:
             print('test_error', test_error)
             assert test_error == 0.0, 'expected 0.0 test_error, got %.2f' % (test_error, )
-        
+
         # NOTE: the following will require scikit-learn
-        print('Confusion matrix:') 
+        print('Confusion matrix:')
         print(confusion_matrix(test_labels, numpy.argmax(eval_in_batches(test_data, sess), 1)))
 
 if __name__ == '__main__':

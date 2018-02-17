@@ -2,6 +2,9 @@ reports/*
 01_notebooks/data/*
 01_notebooks/.ipynb_checkpoints/*
 02_rgb_d/*.pyc
+02_rgb_d/data/*
+02_rgb_d/board/*
+02_rgb_d/__pycache__/*
 03_visual_planner/*.pyc
 03_visual_planner/*.csv
 04_visual_rl/*.pyc

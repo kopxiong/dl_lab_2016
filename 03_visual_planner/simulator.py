@@ -1,28 +1,25 @@
 import numpy as np
 from random import randrange
-# custom modules
 from utils import State
 from maps import maps
 
 class Simulator:
-
     # basic funcs
-
     def __init__(self, map_ind, cub_siz, pob_siz, act_num):
         self.map_ind = map_ind
         self.cub_siz = cub_siz
         self.pob_siz = pob_siz
-        self.bot_ind = 0 # bot's index in obj_pos
-        self.tgt_ind = 1 # bot's index in obj_pos
-        self.obs_ind = 2 # bot's index in obj_pos
-        self.bot_clr_ind = 2 # blue
-        self.tgt_clr_ind = 1 # green
-        self.obs_clr_ind = 0 # red
+        self.bot_ind = 0            # bot's index in obj_pos
+        self.tgt_ind = 1            # bot's index in obj_pos
+        self.obs_ind = 2            # bot's index in obj_pos
+        self.bot_clr_ind = 2        # blue
+        self.tgt_clr_ind = 1        # green
+        self.obs_clr_ind = 0        # red
         # state
         self.state_dim = 2
         # action
-        self.act_dim   = 2 # 0: ^V; 1: <>
-        self.act_num   = act_num # {o, ^, V, <, >}
+        self.act_dim   = 2          # 0: ^V; 1: <>
+        self.act_num   = act_num    # {o, ^, V, <, >}
         self.act_pos_ind = np.array([
             [ 0,  0], # o
             [-1,  0], # ^
@@ -46,8 +43,10 @@ class Simulator:
         # parse map file
         obs_num = np.sum(self.map)
         self.obj_num = 2 + obs_num  # bot+tgt+#obs
-        self.fre_pos = np.ndarray((self.map_hei * self.map_wid - obs_num, self.state_dim), int) # free locations: candidates for bot & tgt
-        self.obj_pos = np.ndarray((self.obj_num, self.state_dim), int) # keep track of all objects, including bot tgt & obs
+        # free locations: candidates for bot & tgt
+        self.fre_pos = np.ndarray((self.map_hei * self.map_wid - obs_num, self.state_dim), int)
+        # keep track of all objects, including bot tgt & obs
+        self.obj_pos = np.ndarray((self.obj_num, self.state_dim), int)
         self.obj_pos[self.bot_ind][0] = self.map_hei # to ease drawing
         self.obj_pos[self.bot_ind][1] = self.map_wid # to ease drawing
         self.obj_pos[self.tgt_ind][0] = self.map_hei # to ease drawing
@@ -230,7 +229,7 @@ class Simulator:
         if self.obj_pos[self.tgt_ind][0] != -1 and self.obj_pos[self.tgt_ind][1] != -1:
             self.tgt_pos_old[0] = self.obj_pos[self.tgt_ind][0]
             self.tgt_pos_old[1] = self.obj_pos[self.tgt_ind][1]
-            
+
         # 1. assign tgt position
         if tgt_y != None and tgt_x != None:
             self.obj_pos[self.tgt_ind][0] = tgt_y
@@ -239,18 +238,18 @@ class Simulator:
             choose_tgt_ind = randrange(self.fre_pos.shape[0])
             self.obj_pos[self.tgt_ind][0] = self.fre_pos[choose_tgt_ind][0]
             self.obj_pos[self.tgt_ind][1] = self.fre_pos[choose_tgt_ind][1]
-            
+
         # 2. assign bot position
         choose_bot_ind = randrange(self.fre_pos.shape[0])
         self.obj_pos[self.bot_ind][0] = self.fre_pos[choose_bot_ind][0]
         self.obj_pos[self.bot_ind][1] = self.fre_pos[choose_bot_ind][1]
-        
+
         # 3. generate A* actions for this current episode
         self.astar(self.obj_pos[self.bot_ind][0],
                    self.obj_pos[self.bot_ind][1],
                    self.obj_pos[self.tgt_ind][0],
                    self.obj_pos[self.tgt_ind][1])
-        
+
         # 4. wrap up
         self.draw_new()
         self.tgt_pos_old[0] = self.obj_pos[self.tgt_ind][0]
