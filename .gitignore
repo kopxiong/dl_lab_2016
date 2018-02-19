@@ -9,6 +9,7 @@ reports/*
 03_visual_planner/*.csv
 03_visual_planner/__pycache__/*
 04_visual_rl/*.pyc
+04_visual_rl/__pycache__/*
 05_final_project/*.pyc
 05_final_project/DDQN_lr_0.00001/*
 05_final_project/DDQN_lr_0.0001/*
