@@ -6,8 +6,8 @@ from simulator import Simulator
 import matplotlib.pyplot as plt
 
 # 0. initialization
-opt = Options()
-sim = Simulator(opt.map_ind, opt.cub_siz, opt.pob_siz, opt.act_num)
+opt    = Options()
+sim    = Simulator(opt.map_ind, opt.cub_siz, opt.pob_siz, opt.act_num)
 states = np.zeros([opt.data_steps, opt.state_siz], float)
 labels = np.zeros([opt.data_steps], int)
 
@@ -33,10 +33,9 @@ for step in range(opt.data_steps):
     else:
         state = sim.step() 	# will perform A* actions
 
-
-    print('shape:{}'.format(state.pob.shape))			# (25, 25, 3)
+    print('shape:{}'.format(state.pob.shape))			    # (25, 25, 3)
     print('shape:{}'.format(rgb2gray(state.pob).shape))		# (25, 25)
-    print('shape:{}'.format(opt.state_siz))			# (625)
+    print('shape:{}'.format(opt.state_siz))			        # (625)
 
     # save data & label
     states[step, :] = rgb2gray(state.pob).reshape(opt.state_siz)
