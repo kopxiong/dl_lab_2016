@@ -2,7 +2,7 @@ import numpy as np
 
 class Options:
     #
-    disp_on = False # you might want to set it to False for speed
+    disp_on = True # you might want to set it to False for speed
     map_ind = 1
     change_tgt = False
     states_fil = "states.csv"
@@ -31,7 +31,7 @@ class Options:
         tgt_x = None
     act_num = 5
 
-    # traing hyper params    
+    # traing hyper params
     hist_len = 4
     minibatch_size  = 128
     eval_nepisodes  = 10
@@ -47,7 +47,7 @@ class State: # return tuples made easy
 
 # The following functions were taken from scikit-image
 # https://github.com/scikit-image/scikit-image/blob/master/skimage/color/colorconv.py
-        
+
 def rgb2gray(rgb):
     if rgb.ndim == 2:
         return np.ascontiguousarray(rgb)

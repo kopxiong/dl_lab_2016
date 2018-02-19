@@ -14,3 +14,4 @@ reports/*
 05_final_project/DDQN_lr_0.00001/*
 05_final_project/DDQN_lr_0.0001/*
 05_final_project/DQN_lr_0.00001/*
+05_final_project/__pycache__/*
